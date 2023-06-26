@@ -1,0 +1,85 @@
+for each actors,
+create a mapX, mapY
+to know where they are in the map
+this is then calculated on the little map
+
+each mapSpace is 256, 192
+
+256 = zoomLevel(4) * 4 tiles * 32px
+192 = zoomLevel(4) * 4 tiles * 24px
+
+so a 20 x 20 = 128 * 20
+
+so if start = 10,9
+
+up,right corner => 320, 216
+
+no.
+
+at no zoom level to start, it is confusing.
+
+one mapSpace = (128px x 96px) * 4(for zoom) / 512, 
+
+a 20 x 20 map =>
+
+2560 x 1920
+
+if start is at mapSpace (10,9);
+
+mapSpace =>
+
+x1 = 10 x 128 = 1280
+y1 = 9  x  96 =  864
+
+oh, how about we use another grid huh?
+but based on the current mapSpace.
+
+that grid would be like i dont know... 7 x 7 around player position
+or it could be dynamic. depending on zoom level.
+
+so if player is at 10, 9 :
+
+28 x 28 grid.
+so
+
+the loop would start at 10 +/- 3 and 9 +/- 3
+
+cab be a 3 x 3 grid. max zoom out will be 4.
+so it is like a (3x4) * (3x4) = 12 x 12
+3 x 3 is what is being seen.
+5 x 5 should be what is being considered.
+
+middle = 500, 300
+512 * 3 = 1536 / 2 = 768 - 512 = 256
+384 * 3 = 1152 / 2 = 576 - 384 = 192
+
+1 2 3
+4 5 6
+7 8 9
+
+1 = -256, -276
+2 = 256, -276
+3 = 768, -276
+4 = -268, 108
+5 = 244, 108
+6 = 756, 108
+7 = -256, 492
+8 = 256, 492
+9 = 768, 492
+
+position should be relative to the drawgrid
+
+now, when the grid slides there is a point where 
+it changes. 
+so when a line or a column is not visible, it is changed.
+so on x would be -512 + -12 of buffer = -524.
+on y it would be -384 + -12 of buffer = -396.
+
+when limit is reached, gridpositionX and Y are 
+then changed. the grid is redrawn.
+
+so, right now, we need to change the grid position.
+ex:
+(4) = center zone.
+4 x745 : y:467
+so for x = -256(origion) + 
