@@ -3,7 +3,7 @@ class Scene {
       this.gameObjects = [];
       this.gamePainters = [];
     }
-  
+
     addObject(gameObject) {
       this.gameObjects.push(gameObject);
     }
