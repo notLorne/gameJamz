@@ -15,17 +15,23 @@ class Actor {
       this.destinationY = destinationY;
     }
   
-    update() {
+    update(maze) {
       if (this.positionX !== this.destinationX || this.positionY !== this.destinationY) {
         const deltaX = this.destinationX - this.positionX;
         const deltaY = this.destinationY - this.positionY;
   
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
           const directionX = Math.sign(deltaX);
-          this.positionX += directionX * this.speed;
+          const newPositionX = this.positionX + directionX * this.speed;
+          if (maze.mazeGrid[newPositionX][this.positionY] !== 0) {
+            this.positionX = newPositionX;
+          }
         } else {
           const directionY = Math.sign(deltaY);
-          this.positionY += directionY * this.speed;
+          const newPositionY = this.positionY + directionY * this.speed;
+          if (maze.mazeGrid[this.positionX][newPositionY] !== 0) {
+            this.positionY = newPositionY;
+          }
         }
       }
     }
